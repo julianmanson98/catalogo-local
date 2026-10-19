@@ -40,6 +40,40 @@ public class ModuloVentas {
         System.out.println("     CATÁLOGO LOCAL - CAJA REGISTRADORA");
         System.out.println("=============================================");
 
+        // ===== Ciclo que mantiene la caja abierta hasta finalizar la compra =====
+        while (opcionSeleccionada != OPCION_FINALIZAR) {
+            System.out.println();
+            System.out.println("------------------- MENÚ -------------------");
+            System.out.printf("1. %-20s $%,12.2f%n", nombreProductoBasico, precioProductoBasico);
+            System.out.printf("2. %-20s $%,12.2f%n", nombreProductoMedio, precioProductoMedio);
+            System.out.printf("3. %-20s $%,12.2f%n", nombreProductoPremium, precioProductoPremium);
+            System.out.println("4. Finalizar compra");
+            System.out.print("Seleccione una opción: ");
+            opcionSeleccionada = lector.nextInt();
+
+            // Selección del producto con if / else if
+            if (opcionSeleccionada == 1) {
+                totalBruto += precioProductoBasico;
+                cantidadProductosBasicos++;
+                cantidadArticulos++;
+                System.out.printf("Agregado: %s | Subtotal: $%,.2f%n", nombreProductoBasico, totalBruto);
+            } else if (opcionSeleccionada == 2) {
+                totalBruto += precioProductoMedio;
+                cantidadProductosMedios++;
+                cantidadArticulos++;
+                System.out.printf("Agregado: %s | Subtotal: $%,.2f%n", nombreProductoMedio, totalBruto);
+            } else if (opcionSeleccionada == 3) {
+                totalBruto += precioProductoPremium;
+                cantidadProductosPremium++;
+                cantidadArticulos++;
+                System.out.printf("Agregado: %s | Subtotal: $%,.2f%n", nombreProductoPremium, totalBruto);
+            } else if (opcionSeleccionada == OPCION_FINALIZAR) {
+                System.out.println("Cerrando la caja y generando la factura...");
+            } else {
+                System.out.println("Opción no válida. Elija un número del 1 al 4.");
+            }
+        }
+
         lector.close();
     }
 }
