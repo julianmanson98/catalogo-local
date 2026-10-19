@@ -33,6 +33,26 @@ public class EvaluadorLotes {
         limiteLote = lector.nextInt();
         lector.nextLine(); // Limpia el salto de línea que deja nextInt()
 
+        // ===== Ciclo: inicialización, condición atada al límite del lote, incremento =====
+        for (int numeroProducto = 1; numeroProducto <= limiteLote; numeroProducto++) {
+            System.out.println();
+            System.out.println("--- Producto " + numeroProducto + " de " + limiteLote + " ---");
+            System.out.print("Nombre del producto: ");
+            nombreProducto = lector.nextLine();
+            System.out.print("Costo base: $");
+            costoBase = lector.nextDouble();
+            lector.nextLine(); // Limpia el salto de línea que deja nextDouble()
+
+            // Clasificación en tiempo real con else if y operadores relacionales / lógicos
+            if (costoBase < LIMITE_INFERIOR_MEDIA) {
+                System.out.println(">> ALERTA: " + nombreProducto + " -> Categoría Baja");
+            } else if (costoBase >= LIMITE_INFERIOR_MEDIA && costoBase <= LIMITE_SUPERIOR_MEDIA) {
+                System.out.println(">> ALERTA: " + nombreProducto + " -> Categoría Media");
+            } else if (costoBase > LIMITE_SUPERIOR_MEDIA) {
+                System.out.println(">> ALERTA: " + nombreProducto + " -> Categoría Alta");
+            }
+        }
+
         lector.close();
     }
 }
