@@ -74,6 +74,51 @@ public class ModuloVentas {
             }
         }
 
+        // ===== Descuento del 10% solo si la compra supera los $100,000 =====
+        double valorDescuento = 0.0;
+        if (totalBruto > MONTO_MINIMO_DESCUENTO) {
+            valorDescuento = totalBruto * TASA_DESCUENTO;
+        }
+        double totalConDescuento = totalBruto - valorDescuento;
+
+        // ===== IVA del 19% sobre el valor con descuento =====
+        double valorIva = totalConDescuento * TASA_IVA;
+        double totalAPagar = totalConDescuento + valorIva;
+
+        // ===== Porcentaje de artículos premium (evitando la división por cero) =====
+        double porcentajePremium = 0.0;
+        if (cantidadArticulos > 0) {
+            porcentajePremium = (double) cantidadProductosPremium / cantidadArticulos * 100;
+        }
+
+        // ===== Factura final =====
+        System.out.println();
+        System.out.println("=============================================");
+        System.out.println("                FACTURA FINAL");
+        System.out.println("=============================================");
+        System.out.printf("%-20s x%3d   $%,14.2f%n", nombreProductoBasico,
+                cantidadProductosBasicos, cantidadProductosBasicos * precioProductoBasico);
+        System.out.printf("%-20s x%3d   $%,14.2f%n", nombreProductoMedio,
+                cantidadProductosMedios, cantidadProductosMedios * precioProductoMedio);
+        System.out.printf("%-20s x%3d   $%,14.2f%n", nombreProductoPremium,
+                cantidadProductosPremium, cantidadProductosPremium * precioProductoPremium);
+        System.out.println("---------------------------------------------");
+        System.out.printf("%-28s %,15d%n", "Total de artículos:", cantidadArticulos);
+        System.out.printf("%-28s $%,14.2f%n", "Total bruto:", totalBruto);
+        System.out.printf("%-28s -$%,13.2f%n", "Descuento (10%):", valorDescuento);
+        System.out.printf("%-28s $%,14.2f%n", "Subtotal con descuento:", totalConDescuento);
+        System.out.printf("%-28s $%,14.2f%n", "IVA (19%):", valorIva);
+        System.out.println("---------------------------------------------");
+        System.out.printf("%-28s $%,14.2f%n", "TOTAL A PAGAR:", totalAPagar);
+        System.out.println("=============================================");
+        System.out.printf("Artículos premium vendidos: %d de %d (%.2f%%)%n",
+                cantidadProductosPremium, cantidadArticulos, porcentajePremium);
+
+        if (valorDescuento == 0.0) {
+            System.out.printf("Nota: el descuento aplica para compras mayores a $%,.0f.%n",
+                    MONTO_MINIMO_DESCUENTO);
+        }
+
         lector.close();
     }
 }
