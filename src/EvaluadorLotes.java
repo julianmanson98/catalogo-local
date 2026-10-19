@@ -50,8 +50,30 @@ public class EvaluadorLotes {
                 System.out.println(">> ALERTA: " + nombreProducto + " -> Categoría Media");
             } else if (costoBase > LIMITE_SUPERIOR_MEDIA) {
                 System.out.println(">> ALERTA: " + nombreProducto + " -> Categoría Alta");
+                contadorCategoriaAlta++;
             }
+
+            acumuladorCostoTotal += costoBase;
         }
+
+        // ===== Resultados del lote =====
+        System.out.println();
+        System.out.println("=============================================");
+        System.out.println("              RESUMEN DEL LOTE");
+        System.out.println("=============================================");
+
+        if (limiteLote > 0) {
+            // Promedio: acumulador total dividido entre el límite del lote (resultado decimal)
+            costoPromedio = acumuladorCostoTotal / limiteLote;
+
+            System.out.printf("%-30s %,14d%n", "Productos ingresados:", limiteLote);
+            System.out.printf("%-30s $%,13.2f%n", "Costo total del lote:", acumuladorCostoTotal);
+            System.out.printf("%-30s $%,13.2f%n", "Costo promedio por producto:", costoPromedio);
+            System.out.printf("%-30s %,14d%n", "Productos de Categoría Alta:", contadorCategoriaAlta);
+        } else {
+            System.out.println("El lote no tiene productos; no se puede calcular el promedio.");
+        }
+        System.out.println("=============================================");
 
         lector.close();
     }
